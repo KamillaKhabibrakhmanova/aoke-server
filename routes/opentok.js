@@ -15,8 +15,6 @@ var OpenTok = require('opentok'),
 
 
 router.get('/', function(req, res, next) {
-	//res.send('HELLO WORLD');
-	// var sessionId;
 	console.log('HELLO WORLD');
 	opentok.createSession(null, function(err, result) {
 		if (err) next(err);
