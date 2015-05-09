@@ -3,6 +3,8 @@
 var express = require('express');
 var router = express.Router();
 var controller = './opentok.js';
+var OpenTok = require('opentok');
+var opentok = new OpenTok(45232972, '328a1cbe87d9bbf7f72d11ee339f2d627f3fedf3');
 
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -10,22 +12,22 @@ router.use(function(req, res, next) {
   next();
 });
 
-var OpenTok = require('opentok'),
-    opentok = new OpenTok(45232972, '328a1cbe87d9bbf7f72d11ee339f2d627f3fedf3');
-
-
 router.get('/', function(req, res, next) {
-	console.log('HELLO WORLD');
-	opentok.createSession(null, function(err, result) {
-		if (err) next(err);
-		console.log('createdNewSession');
-		console.log(result);
-		console.log(err);
+	opentok.createSession({mediaMode:"routed"}, function(err, result) {
 		if(err) console.log(err);
-	    sessionId = result;
-	    res.json(sessionId);
+	    res.json(result.sessionId);
 	})	
 });
+
+router.get('/publisher/:sessionId', function(req, res) {
+	var token = opentok.generateToken(req.params.sessionId, {'role': 'publisher'});
+	res.send(token);
+})
+
+router.get('/:sessionId', function(req, res) {
+	var token = opentok.generateToken(req.params.sessionId, {'role': 'subscriber'});
+	res.send(token);
+})
 
 //opentok.generateToken(sessionID, {'role:publisher'});
 

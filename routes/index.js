@@ -14,19 +14,4 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/new', function(req, res) {
-	res.send('HELLO WORLD');
-	// var sessionId;
-	// console.log('dfdfdf', req);
-	// opentok.createSession(null, function(err, result) {
-	// 	console.log('createdNewSession');
-	// 	console.log(result);
-	// 	console.log(err);
-	// 	if(err) console.log(err);
-	//     sessionId = result;
-	//     console.log('sess id', sessionId)
-	//     return res.status(200).json(sessionId);
-	// })	
-});
-
 module.exports = router;
