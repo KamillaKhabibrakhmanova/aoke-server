@@ -7,10 +7,6 @@ var controller = './opentok.js';
 router.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Cache-Control: no-cache, no-cache, no-cache");
-  res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-  res.header("Pragma", "no-cache");
-  res.header("Expires", 0);
   next();
 });
 
@@ -18,18 +14,18 @@ var OpenTok = require('opentok'),
     opentok = new OpenTok(45232972, '328a1cbe87d9bbf7f72d11ee339f2d627f3fedf3');
 
 
-router.get('/', function(req, res) {
+router.get('/', function(req, res, next) {
 	//res.send('HELLO WORLD');
 	// var sessionId;
-	console.log('dfdfdf', req);
+	console.log('HELLO WORLD');
 	opentok.createSession(null, function(err, result) {
+		if (err) next(err);
 		console.log('createdNewSession');
 		console.log(result);
 		console.log(err);
 		if(err) console.log(err);
 	    sessionId = result;
-	    console.log('sess id', sessionId)
-	    return res.status(200).json(sessionId);
+	    res.json(sessionId);
 	})	
 });
 
